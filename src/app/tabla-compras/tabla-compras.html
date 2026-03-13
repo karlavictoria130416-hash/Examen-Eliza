@@ -1,0 +1,71 @@
+<div class="tabla-contenedor">
+
+  <!-- Título de la sección -->
+  <h2 class="titulo-tabla">Lista de Productos</h2>
+
+  <!-- 
+  La tabla solo aparece si existen productos.
+  Si el arreglo está vacío se mostrará el template "sinDatos"
+  -->
+  <table class="tabla-productos" *ngIf="items.length > 0; else sinDatos">
+
+    <thead>
+      <tr>
+        <!-- Encabezados -->
+        <th>ID</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <!-- Recorremos el arreglo de productos -->
+      <tr *ngFor="let producto of items; let i = index">
+
+        <!-- Número de fila -->
+        <td>{{ i + 1 }}</td>
+
+        <!-- Nombre del producto -->
+        <td>{{ producto.producto }}</td>
+
+        <!-- Cantidad -->
+        <td>{{ producto.cantidad }}</td>
+
+        <!-- Botón para editar -->
+        <td>
+          <button 
+            type="button"
+            (click)="editarItem(i)"
+            class="btn-update"
+          >
+            Editar
+          </button>
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+  <!-- 
+  Template que aparece cuando no hay productos registrados
+  -->
+  <ng-template #sinDatos>
+
+    <div class="estado-vacio">
+      <p>No se encontraron productos en la lista.</p>
+    </div>
+
+  </ng-template>
+
+  <br>
+
+  <!-- Botón para regresar al formulario -->
+  <button routerLink="/" class="btn-volver">
+    Regresar al formulario
+  </button>
+
+</div>

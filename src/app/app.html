@@ -1,0 +1,94 @@
+<!-- 
+Solo mostramos el formulario si NO estamos en la ruta /lista
+porque esa ruta muestra la tabla
+-->
+<ng-container *ngIf="router.url !== '/lista'">
+
+  <!-- Formulario reactivo -->
+  <form [formGroup]="miFormulario" class="form-contenedor">
+
+    <!-- Campo para el nombre de la lista -->
+    <label class="label-principal">Nombre de la Lista:</label>
+
+    <input 
+      formControlName="nombreLista"
+      placeholder="Ej: Compras"
+      class="input-nombre"
+    >
+
+    <hr class="separador">
+
+    <!-- Título de sección -->
+    <h3>Productos</h3>
+
+    <!-- FormArray donde se guardan los productos -->
+    <div formArrayName="items">
+
+      <!-- Recorremos cada producto del array -->
+      <div 
+        *ngFor="let item of listaItems.controls; let i = index"
+        [formGroupName]="i"
+        class="item-fila"
+      >
+
+        <!-- Campo del nombre del producto -->
+        <input
+          formControlName="producto"
+          placeholder="Nombre del producto"
+          class="input-producto"
+        >
+
+        <!-- Campo de la cantidad -->
+        <input
+          type="number"
+          formControlName="cantidad"
+          placeholder="Cant."
+          class="input-cantidad"
+        >
+
+        <!-- Botón eliminar producto -->
+        <button
+          type="button"
+          (click)="eliminarItem(i)"
+          class="btn-eliminar"
+        >
+          &times; Eliminar
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="acciones-finales">
+
+      <!-- Botón agregar producto -->
+      <button
+        type="button"
+        (click)="agregarItem()"
+        class="btn-agregar"
+      >
+        + Agregar Producto
+      </button>
+
+      <br><br>
+
+      <!-- Botón para ver los datos en la tabla -->
+      <button
+        type="button"
+        (click)="verEnOtraPagina()"
+        class="btn-ver-tabla"
+      >
+        Ver en Tabla
+      </button>
+
+    </div>
+
+  </form>
+
+</ng-container>
+
+<!-- 
+Router outlet donde se carga el componente de la tabla
+cuando estamos en /lista
+-->
+<router-outlet></router-outlet>
